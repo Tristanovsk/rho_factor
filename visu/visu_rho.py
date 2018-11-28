@@ -260,16 +260,16 @@ app.layout = html.Div(children=[
 #                 )
 #             ])
 #     ]
-
-
-external_css = [
-
-    "https://raw.githubusercontent.com/Tristanovsk/rho_factor/master/visu/custom-styles.css",
-    "https://raw.githubusercontent.com/Tristanovsk/rho_factor/master/visu/base-styles.css"
-]
-
-for css in external_css:
-    app.css.append_css({"external_url": css})
+#
+#
+# external_css = [
+#
+#     "https://raw.githubusercontent.com/Tristanovsk/rho_factor/master/visu/custom-styles.css",
+#     "https://raw.githubusercontent.com/Tristanovsk/rho_factor/master/visu/base-styles.css"
+# ]
+#
+# for css in external_css:
+#     app.css.append_css({"external_url": css})
 
 # Running the server
 if __name__ == '__main__':
