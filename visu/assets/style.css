@@ -1,5 +1,6 @@
 /* Table of contents
 ––––––––––––––––––––––––––––––––––––––––––––––––––
+- Plotly.js
 - Grid
 - Base Styles
 - Typography
@@ -15,6 +16,21 @@
 - Media Queries
 */
 
+/* PLotly.js
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* plotly.js's modebar's z-index is 1001 by default
+ * https://github.com/plotly/plotly.js/blob/7e4d8ab164258f6bd48be56589dacd9bdd7fded2/src/css/_modebar.scss#L5
+ * In case a dropdown is above the graph, the dropdown's options
+ * will be rendered below the modebar
+ * Increase the select option's z-index
+ */
+
+/* This was actually not quite right -
+   dropdowns were overlapping each other (edited October 26)
+
+.Select {
+    z-index: 1002;
+}*/
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -44,23 +60,23 @@
     width: 80%; }
   .column,
   .columns {
-    margin-left: 0.5%; }
+    margin-left: 4%; }
   .column:first-child,
   .columns:first-child {
     margin-left: 0; }
 
   .one.column,
-  .one.columns                    { width: 8%;             }
-  .two.columns                    { width: 16.25%;         }
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
   .three.columns                  { width: 22%;            }
-  .four.columns                   { width: 33%;            }
+  .four.columns                   { width: 30.6666666667%; }
   .five.columns                   { width: 39.3333333333%; }
-  .six.columns                    { width: 49.75%;          }
+  .six.columns                    { width: 48%;            }
   .seven.columns                  { width: 56.6666666667%; }
-  .eight.columns                  { width: 66.5%;          }
+  .eight.columns                  { width: 65.3333333333%; }
   .nine.columns                   { width: 74.0%;          }
   .ten.columns                    { width: 82.6666666667%; }
-  .eleven.columns                 { width: 91.5%; }
+  .eleven.columns                 { width: 91.3333333333%; }
   .twelve.columns                 { width: 100%; margin-left: 0; }
 
   .one-third.column               { width: 30.6666666667%; }
@@ -149,7 +165,9 @@ blockquote {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1EAEDB; }
+  color: #1EAEDB;
+  text-decoration: underline;
+  cursor: pointer;}
 a:hover {
   color: #0FA0CE; }
 
@@ -298,6 +316,9 @@ li {
 
 /* Tables
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+table {
+  border-collapse: collapse;
+}
 th,
 td {
   padding: 12px 15px;

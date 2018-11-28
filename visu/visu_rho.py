@@ -8,14 +8,13 @@ import dash_html_components as html
 import numpy as np
 from dash.dependencies import Input, Output, State
 
-
 from visu import dash_reusable_components as drc
-from visu.figures import serve_prediction_plot, serve_roc_curve, \
-    serve_pie_confusion_matrix
+# from visu.figures import serve_prediction_plot, serve_roc_curve, \
+#     serve_pie_confusion_matrix
 
 
 app = dash.Dash(__name__)
-server = app.server
+
 
 app.layout = html.Div(children=[
     # .container class is fixed, .container.scalable is scalable
@@ -44,7 +43,7 @@ app.layout = html.Div(children=[
             html.Div(
                 id='div-graphs',
                 children=dcc.Graph(
-                    id='graph-sklearn-svm',
+                    id='main_graph',
                     style={'display': 'none'}
                 )
             ),
@@ -190,27 +189,89 @@ app.layout = html.Div(children=[
                     ),
                 ]
             ),
+
         ]),
+
     ])
 ])
 
 
+# @app.callback(Output('slider-threshold', 'value'),
+#               [Input('button-reset', 'n_clicks')],
+#               [State('main_graph', 'figure')])
+# def reset_threshold_center(n_clicks, figure):
+#     if n_clicks:
+#         Z = np.array(figure['data'][0]['z'])
+#         value = - Z.min() / (Z.max() - Z.min())
+#     else:
+#         value = 0.4959986285375595
+#     return value
+#
+# @app.callback(Output('div-graphs', 'children'),
+#               [Input('dropdown-select-dataset', 'value'),
+#               ])
+# def update_svm_graph(kernel,
+#                      degree,
+#                      C_coef,
+#                      C_power,
+#                      gamma_coef,
+#                      gamma_power,
+#                      dataset,
+#                      noise,
+#                      shrinking,
+#                      threshold,
+#                      sample_size):
+#     return [
+#         html.Div(
+#             className='three columns',
+#             style={
+#                 'min-width': '24.5%',
+#                 'height': 'calc(100vh - 90px)',
+#                 'margin-top': '5px',
+#
+#                 # Remove possibility to select the text for better UX
+#                 'user-select': 'none',
+#                 '-moz-user-select': 'none',
+#                 '-webkit-user-select': 'none',
+#                 '-ms-user-select': 'none'
+#             },
+#             children=[
+#                 dcc.Graph(
+#                     id='graph-line-roc-curve',
+#                     style={'height': '40%'},
+#                     #figure=None
+#                 ),
+#
+#                 dcc.Graph(
+#                     id='graph-pie-confusion-matrix',
+#                     #figure=None,
+#                     style={'height': '60%'}
+#                 )
+#             ]),
+#
+#         html.Div(
+#             className='six columns',
+#             style={'margin-top': '5px'},
+#             children=[
+#                 dcc.Graph(
+#                     id='main_graph',
+#                     #figure=None,
+#                     style={'height': 'calc(100vh - 90px)'}
+#                 )
+#             ])
+#     ]
+
+
 external_css = [
-    # Normalize the CSS
-    "https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css",
-    # Fonts
-    "https://fonts.googleapis.com/css?family=Open+Sans|Roboto",
-    "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-    # Base Stylesheet, replace this with your own base-styles.css using Rawgit
-    "https://rawgit.com/xhlulu/9a6e89f418ee40d02b637a429a876aa9/raw/f3ea10d53e33ece67eb681025cedc83870c9938d/base-styles.css",
-    # Custom Stylesheet, replace this with your own custom-styles.css using Rawgit
-    "https://cdn.rawgit.com/plotly/dash-svm/bb031580/custom-styles.css"
+
+    "https://raw.githubusercontent.com/Tristanovsk/rho_factor/master/visu/custom-styles.css",
+    "https://raw.githubusercontent.com/Tristanovsk/rho_factor/master/visu/base-styles.css"
 ]
-external_css=[]
+
 for css in external_css:
     app.css.append_css({"external_url": css})
 
 # Running the server
 if __name__ == '__main__':
-    app.run_server(debug=True)
-app.run_server()
+    #app.run_server(debug=True)
+    app.run_server()
