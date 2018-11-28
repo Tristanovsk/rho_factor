@@ -25,7 +25,7 @@ app.layout = html.Div(children=[
             # Change App Name here
             html.H2(html.A(
                 'Surface reflection factor',
-                href='https://github.com/plotly/dash-svm',
+                href='https://github.com/Tristanovsk/rho_factor',
                 style={
                     'text-decoration': 'none',
                     'color': 'inherit'
@@ -33,7 +33,7 @@ app.layout = html.Div(children=[
             )),
 
             html.A(
-                html.Img(src="https://s3-us-west-1.amazonaws.com/plotly-tutorials/logo/new-branding/dash-logo-by-plotly-stripe-inverted.png"),
+                html.Img(src="https://github.com/Tristanovsk/rho_factor/blob/master/fig/lut_fig_rho_tables_wl550.0nm_aot0.0001.png"),
                 href='https://plot.ly/products/dash/'
             )
         ]),
@@ -74,7 +74,7 @@ app.layout = html.Div(children=[
                         ),
 
                         drc.NamedSlider(
-                            name='Sample Size',
+                            name='Time range',
                             id='slider-dataset-sample-size',
                             min=100,
                             max=500,
@@ -84,7 +84,7 @@ app.layout = html.Div(children=[
                         ),
 
                         drc.NamedSlider(
-                            name='Noise Level',
+                            name='Exclude spectra',
                             id='slider-dataset-noise-level',
                             min=0,
                             max=1,
@@ -96,9 +96,18 @@ app.layout = html.Div(children=[
                     ]),
 
                     drc.Card([
+                        html.P(f'Geometry:'),
                         drc.NamedSlider(
-                            name='Threshold',
-                            id='slider-threshold',
+                            name='Viewing zenith angle (deg)',
+                            id='slider-vza',
+                            min=0,
+                            max=1,
+                            value=0.5,
+                            step=0.01
+                        ),
+                        drc.NamedSlider(
+                            name='Azimuth angle (deg)',
+                            id='slider-azi',
                             min=0,
                             max=1,
                             value=0.5,
@@ -106,27 +115,12 @@ app.layout = html.Div(children=[
                         ),
 
                         html.Button(
-                            'Reset Threshold',
-                            id='button-zero-threshold'
+                            'Reset to standard values',
+                            id='button-reset'
                         ),
                     ]),
 
                     drc.Card([
-                        drc.NamedDropdown(
-                            name='Kernel',
-                            id='dropdown-svm-parameter-kernel',
-                            options=[
-                                {'label': 'Radial basis function (RBF)',
-                                 'value': 'rbf'},
-                                {'label': 'Linear', 'value': 'linear'},
-                                {'label': 'Polynomial', 'value': 'poly'},
-                                {'label': 'Sigmoid', 'value': 'sigmoid'}
-                            ],
-                            value='rbf',
-                            clearable=False,
-                            searchable=False
-                        ),
-
                         drc.NamedSlider(
                             name='Cost (C)',
                             id='slider-svm-parameter-C-power',
@@ -200,4 +194,23 @@ app.layout = html.Div(children=[
     ])
 ])
 
+
+external_css = [
+    # Normalize the CSS
+    "https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css",
+    # Fonts
+    "https://fonts.googleapis.com/css?family=Open+Sans|Roboto",
+    "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
+    # Base Stylesheet, replace this with your own base-styles.css using Rawgit
+    "https://rawgit.com/xhlulu/9a6e89f418ee40d02b637a429a876aa9/raw/f3ea10d53e33ece67eb681025cedc83870c9938d/base-styles.css",
+    # Custom Stylesheet, replace this with your own custom-styles.css using Rawgit
+    "https://cdn.rawgit.com/plotly/dash-svm/bb031580/custom-styles.css"
+]
+external_css=[]
+for css in external_css:
+    app.css.append_css({"external_url": css})
+
+# Running the server
+if __name__ == '__main__':
+    app.run_server(debug=True)
 app.run_server()
