@@ -14,7 +14,7 @@ class rho:
         self.wl = wl
         if rho_file == None:
             # TODO put rho_file in a config.py file
-            rho_file = "./aux/surface_reflectance_factor_rho_fine_aerosol_rg0.06_sig0.46.csv"
+            rho_file = "/DATA/git/rho_factor/rho_values/surface_reflectance_factor_rho_fine_aerosol_rg0.06_sig0.46.csv"
         self.rho_file = rho_file
         self.load_rho_lut()
 
