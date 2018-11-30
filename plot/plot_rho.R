@@ -1,7 +1,7 @@
 
-source( '/DATA/R/ggplot2_perso.R')
+source( './ggplot2_perso.R')
 
-dir = "/DATA/OBS2CO/app/rho_factor/"
+dir = "../rho_factor/"
 
 rho_m1999 = read.csv(paste0(dir,'data/aux/rhoTable_Mobley1999.csv'), skip=7)
 rho_m2015 = read.csv(paste0(dir,'data/aux/rhoTable_Mobley2015.csv'), skip=8)

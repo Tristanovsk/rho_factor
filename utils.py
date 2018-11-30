@@ -31,7 +31,7 @@ class figure:
         with pdf(fout) as p:
             for (wl, group) in df.groupby(level=2, axis=1):
                 if wl != '':
-                    print wl
+                    print(wl)
                     group.dropna(inplace=True)
                     x = group.xs(xname, level=1, axis=1).values[:, 0]
                     y = group.xs(yname, level=1, axis=1).values[:, 0]

@@ -66,7 +66,7 @@ class lut:
         :return: load lut values in self object
 
         '''
-        print 'loading lut... please wait.'
+        print('loading lut... please wait.')
         Nws = len(self.ws)
         Naot = len(self.aot)
         ok = 0

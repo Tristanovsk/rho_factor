@@ -1,5 +1,3 @@
-import os
-import time
 from textwrap import dedent
 
 import plotly.graph_objs as go
@@ -7,13 +5,10 @@ import plotly.graph_objs as go
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import numpy as np
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 
-import visu.process as pr
+import process as pr
 import visu.dash_reusable_components as drc
-from visu.figures import serve_prediction_plot, serve_roc_curve, \
-    serve_pie_confusion_matrix
 
 rho = pr.rho()
 rho.load_rho_lut()

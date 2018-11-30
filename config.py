@@ -1,8 +1,10 @@
+'''where you can set absolute and relative path used in the package'''
+
 import os
-import pandas as pd
 
 dir = os.path.dirname(os.path.abspath(__file__))
 
-#load Mobley tabulated values
-rho_m1999 = pd.read_csv(os.path.join(dir,'data/aux/rhoTable_Mobley1999.csv'), skiprows=7)
-rho_m2015 = pd.read_csv(os.path.join(dir,'data/aux/rhoTable_Mobley2015.csv'), skiprows=8)
+M2015_file = './data/aux/rhoTable_Mobley2015.csv'
+M1999_file = './data/aux/rhoTable_Mobley1999.csv'
+rhosoaa_fine_file = './data/aux/surface_reflectance_factor_rho_fine_aerosol_rg0.06_sig0.46.csv'
+rhosoaa_coarse_file = './data/aux/surface_reflectance_factor_rho_coarse_aerosol_rg0.60_sig0.60.csv'
