@@ -1,4 +1,4 @@
-'''where you can set absolute and relative path used in the package'''
+'''where you can set absolute and/or relative paths used in the package'''
 
 import os
 
