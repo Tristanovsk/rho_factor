@@ -1,5 +1,5 @@
 from textwrap import dedent
-
+import pandas as pd
 import plotly.graph_objs as go
 
 import dash
@@ -12,30 +12,39 @@ import visu.dash_reusable_components as drc
 
 rho = pr.rho()
 rho.load_rho_lut()
-df = rho.rho
+df_coarse = rho.rhosoaa_coarse
+df_fine = rho.rhosoaa_fine
+df = pd.concat([df_fine, df_coarse], axis=0, keys=['fine', 'coarse'])
+
 
 button = []
 for lev in df.index.levels:
-    min, max = lev.values.min(), lev.values.max()
-    button.append(
-        drc.NamedSlider(
-            name=f'{lev.name} range',
-            id='slider-dataset-sample-size',
-            min=min,
-            max=max,
-            step=((max - min) / 5),
-            marks={i: i for i in lev.values},
-            value=min
-        ), )
+    try:
+
+        min, max = lev.values.min(), lev.values.max()
+        button.append(
+            drc.NamedSlider(
+                name=f'{lev.name} range',
+                id='slider-dataset-sample-size',
+                min=min,
+                max=max,
+                step=((max - min) / 5),
+                marks={i: i for i in lev.values},
+                value=min
+            ), )
+    except:
+        continue
 
 DDButton = []
 ids = []
-for lev in df.index.levels:
+df=df.reorder_levels((0,1,2,4,5,6,3)) #put wl at the end
+for lev in df.index.levels[1:]:
     v = lev.values
     v0=v[0]
     if lev.name == 'wl':
         v0=v
     id_ = 'dd_' + lev.name
+    print(id_)
     ids.append(id_)
     DDButton.append(
         drc.NamedDropdown(
@@ -63,11 +72,11 @@ app.layout = html.Div(children=[
                 }
             )),
 
-            html.A(
-                html.Img(
-                    src="https://github.com/Tristanovsk/rho_factor/blob/master/fig/lut_fig_rho_tables_wl550.0nm_aot0.0001.png"),
-                href='https://plot.ly/products/dash/'
-            )
+            # html.A(
+            #     html.Img(
+            #         src="https://github.com/Tristanovsk/rho_factor/blob/master/fig/lut_fig_rho_tables_wl550.0nm_aot0.0001.png"),
+            #     href='https://plot.ly/products/dash/'
+            # )
         ]),
     ]),
 
@@ -75,22 +84,36 @@ app.layout = html.Div(children=[
         html.Div(className='row', children=[
             html.Div(
                 id='div-graphs',
-                children=dcc.Graph(
-                    id='main_graph',
-                    style={'display': 'none'}
-                )
+                style={ 'max-height': 'calc(50vh - 85px)'},
+                 children=dcc.Graph(
+                     id='main_graph',
+
+                 )
             ),
 
             html.Div(
                 className='three columns',
                 style={
                     'min-width': '24.5%',
-                    'max-height': 'calc(100vh - 85px)',
+                    'max-height': 'calc(90vh - 85px)',
                     'overflow-y': 'auto',
                     'overflow-x': 'auto',
                 },
-                children=[
-                    drc.Card(html.Div(DDButton))
+                children=[#drc.Card(html.Div(DDButton))
+                    drc.Card(html.Div(
+
+                        [drc.NamedRadioItems(
+                            name='Aerosol type',
+                            id='id_aerosol',
+                            labelStyle={
+                                'margin-right': '7px',
+                                'display': 'inline-block'
+                            },
+                            options=[
+                                {'label': ' fine', 'value': 'fine'},
+                                {'label': ' coarse', 'value': 'coarse'},
+                            ],
+                            value='fine')]+DDButton))
                 ]),
 
         ]),
@@ -107,18 +130,31 @@ app.layout = html.Div(children=[
 ])
 
 
-def figure(dff,levels,col):
+def figure(dff,levels,col,yaxis=''):
+    '''
+
+    :param dff:
+    :param levels:
+    :param col:
+    :return:
+    '''
     layout = go.Layout(xaxis={'title': 'Wavelength (nm)'},
-                   yaxis={'title': 'test'},
+                   yaxis={'title': yaxis},
                    hovermode='closest')
     trace = []
     for idx, data  in dff.groupby(level=levels):
         print(idx)
         trace.append(go.Scattergl(
-            x=data.index.get_level_values(2),  # spectrum,
+            x=data.index.get_level_values(-1),  # spectrum,
             y=data.iloc[:,col],
-            text=data.index.get_level_values(0),
-
+            text=data.index.get_level_values(0)+' '+
+                 data.index.get_level_values(1).astype(str)+' '+
+                 data.index.get_level_values(2).astype(str)+' '+
+                 data.index.get_level_values(3).astype(str)+' '+
+                 data.index.get_level_values(4).astype(str)+' '+
+                 data.index.get_level_values(5).astype(str),
+            # data.index.values, #get_level_values(0),
+            #name=str(data.index.get_level_values(0)),
             mode='lines+markers',
             marker={
                 'size': 7,
@@ -137,35 +173,36 @@ def figure(dff,levels,col):
         'layout': layout
     }
 
-input = []
+input = [Input('id_aerosol', 'value')]
 for id_ in ids:
     input.append(Input(id_, 'value'))
 
 
 @app.callback(Output('div-graphs', 'children'),
               input)
-def update_svm_graph(*kargs):
+def update_graph(*kargs):
     print(kargs)
     dff = df.loc[kargs]
-    levels=[0, 1, 3, 4, 5] #range(dff.index.levels.__len__())
+    levels=[1,2,3,4,5]#range(dff.index.levels.__len__()-1)
     return [
 
 
         html.Div(
             className='nine columns',
-            style={'margin-top': '5px',
+            style={'height': 'calc(100vh - 90px)',
+                   'margin-top': '1px',
                    },
             children=[
                 dcc.Graph(
                     id='main_graph',
-                    figure=figure(dff,levels, 0),
-                    style={'height': '50%'}
+                    style={ 'margin-top': '0','height': '48%'},
+                    figure=figure(dff,levels, 0,'rho'),
                 ),
                 dcc.Graph(
                     id='main_graph2',
-                    figure=figure(dff, levels, 1),
-                    style={'height': '50%'}
-                )
+                    style={'height': '48%'},
+                    figure=figure(dff, levels, 1,'rho_g'),
+                ),
             ]),
 
     ]
