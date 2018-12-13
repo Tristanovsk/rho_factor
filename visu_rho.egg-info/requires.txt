@@ -1,0 +1,10 @@
+pandas
+scipy
+numpy
+netCDF4
+plotly
+dash
+dash_core_components
+dash_html_components
+matplotlib
+docopt

@@ -1,0 +1,3 @@
+[console_scripts]
+visu_rho = visu_rho.visu_rho:visu
+
