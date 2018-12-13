@@ -6,4 +6,23 @@ Tools to generate and analyze the so-called surface reflection factor (rho facto
 
 ## help for visualization
 
-![visu_example](./visu/illustration/rho_visu_example.gif)
+![visu_example](rho_factor/visu_rho/illustration/rho_visu_example.gif)
+
+
+### Installing
+
+To install the package:
+```
+python setup.py install
+```
+
+or 
+
+```
+python setup.py install --user
+```
+
+If the installation is successful, type:
+```
+visu_rho
+```
