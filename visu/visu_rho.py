@@ -119,7 +119,7 @@ app.layout = html.Div(children=[
         ]),
         html.Div(
             dcc.Markdown(dedent("""
-                [Click here](https://github.com/plotly/dash-svm) to visit the project repo, and learn about how to use the app.
+                [Click here](https://github.com/Tristanovsk/rho_factor) to visit the project repo, and learn about how to use the app.
                 """)),
             style={'margin': '20px 0px', 'text-align': 'center'}
 
