@@ -31,7 +31,7 @@ class lut:
         '''
         from scipy.interpolate import interp1d
 
-        self.load_lut(vza_lim=[25, 65],)
+        self.load_lut(vza_lim=[vza.min()-2,vza.max()+2],)
         Naot = len(self.aot)
         Nws = len(self.ws)
 
@@ -46,6 +46,7 @@ class lut:
         #Lg = interp1d(self.grid_lut[-1], self.Lg)(vza_grid)
         for iws in range(Nws):
             for iaot in range(Naot):
+                print(iws,iaot,self.grid_lut[-1],vza)
                 for iwl in range(len(self.wl)):
                     Lg[iws, iaot,iwl,] = interp1d(self.grid_lut[-1], self.Lg[iws, iaot,iwl])(vza)
                     Lsurf[iws, iaot,iwl,] = interp1d(self.grid_lut[-1], self.Lsurf[iws, iaot,iwl])(vza)

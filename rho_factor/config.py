@@ -2,7 +2,7 @@
 
 import os
 
-dir = os.path.dirname(os.path.abspath(__file__))
+dir = '/DATA/git/rho_factor' #os.path.dirname(os.path.abspath(__file__))
 
 M2015_file = './data/aux/rhoTable_Mobley2015.csv'
 M1999_file = './data/aux/rhoTable_Mobley1999.csv'
