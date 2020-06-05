@@ -26,7 +26,7 @@ def visu():
             min, max = lev.values.min(), lev.values.max()
             button.append(
                 drc.NamedSlider(
-                    name=f'{lev.name} range',
+                    name='%s range'%lev.name,
                     id='slider-dataset-sample-size',
                     min=min,
                     max=max,
@@ -50,7 +50,7 @@ def visu():
         ids.append(id_)
         DDButton.append(
             drc.NamedDropdown(
-                name=f'{lev.name} range',
+                name='%s range'% lev.name,
                 id=id_,
                 options=[{'label': str(i), 'value': i} for i in v],
                 value=v0,

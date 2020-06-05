@@ -26,3 +26,15 @@ If the installation is successful, type:
 ```
 visu_rho
 ```
+
+## Authors
+
+* **Tristan Harmel** - *Initial work* - [contact](tristan.harmel@gmail.com)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+Related scientific work has been supported by the Programme National de Télédétection Spatiale (PNTS,
+http://www.insu.cnrs.fr/pnts ), grant n°PNTS-2019-13
